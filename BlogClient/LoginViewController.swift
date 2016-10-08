@@ -9,11 +9,17 @@
 import UIKit
 
 
-class ViewController: UIViewController {
+class LoginViewController: UIViewController {
 
+    @IBOutlet var textFields: [UITextField]!
+    @IBOutlet weak var username: UITextField!
+    @IBOutlet weak var password: UITextField!
+    @IBAction func login(_ sender: UIButton) {
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        assingDelegateToTextFields(textFields)
+    
     }
 
     override func didReceiveMemoryWarning() {

@@ -8,20 +8,24 @@
 
 /* Begin PBXBuildFile section */
 		1E0D3BB21DA7308F009B3E40 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E0D3BB11DA7308F009B3E40 /* AppDelegate.swift */; };
-		1E0D3BB41DA7308F009B3E40 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E0D3BB31DA7308F009B3E40 /* ViewController.swift */; };
+		1E0D3BB41DA7308F009B3E40 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E0D3BB31DA7308F009B3E40 /* LoginViewController.swift */; };
 		1E0D3BB71DA7308F009B3E40 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1E0D3BB51DA7308F009B3E40 /* Main.storyboard */; };
 		1E0D3BB91DA7308F009B3E40 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E0D3BB81DA7308F009B3E40 /* Assets.xcassets */; };
 		1E0D3BBC1DA7308F009B3E40 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1E0D3BBA1DA7308F009B3E40 /* LaunchScreen.storyboard */; };
+		1ED81BC81DA83FDE004D252F /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED81BC71DA83FDE004D252F /* SignupViewController.swift */; };
+		1ED81BCA1DA84162004D252F /* Keyboard Controll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED81BC91DA84162004D252F /* Keyboard Controll.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		1E0D3BAE1DA7308F009B3E40 /* BlogClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlogClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1E0D3BB11DA7308F009B3E40 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		1E0D3BB31DA7308F009B3E40 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		1E0D3BB31DA7308F009B3E40 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		1E0D3BB61DA7308F009B3E40 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1E0D3BB81DA7308F009B3E40 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1E0D3BBB1DA7308F009B3E40 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1E0D3BBD1DA7308F009B3E40 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1ED81BC71DA83FDE004D252F /* SignupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
+		1ED81BC91DA84162004D252F /* Keyboard Controll.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Keyboard Controll.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,7 +59,9 @@
 			isa = PBXGroup;
 			children = (
 				1E0D3BB11DA7308F009B3E40 /* AppDelegate.swift */,
-				1E0D3BB31DA7308F009B3E40 /* ViewController.swift */,
+				1ED81BC71DA83FDE004D252F /* SignupViewController.swift */,
+				1E0D3BB31DA7308F009B3E40 /* LoginViewController.swift */,
+				1ED81BC91DA84162004D252F /* Keyboard Controll.swift */,
 				1E0D3BB51DA7308F009B3E40 /* Main.storyboard */,
 				1E0D3BB81DA7308F009B3E40 /* Assets.xcassets */,
 				1E0D3BBA1DA7308F009B3E40 /* LaunchScreen.storyboard */,
@@ -137,7 +143,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1E0D3BB41DA7308F009B3E40 /* ViewController.swift in Sources */,
+				1ED81BCA1DA84162004D252F /* Keyboard Controll.swift in Sources */,
+				1ED81BC81DA83FDE004D252F /* SignupViewController.swift in Sources */,
+				1E0D3BB41DA7308F009B3E40 /* LoginViewController.swift in Sources */,
 				1E0D3BB21DA7308F009B3E40 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -300,6 +308,7 @@
 				1E0D3BC21DA7308F009B3E40 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
