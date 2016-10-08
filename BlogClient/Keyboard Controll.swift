@@ -42,7 +42,6 @@ extension UIViewController:UITextFieldDelegate, UITextViewDelegate {
     }
 
     func assingDelegateToTextFields(_ fields: [UITextField]) {
-        
         for each in fields {
             setDelegate(each)
         }
