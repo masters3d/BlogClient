@@ -53,7 +53,9 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" secureTextEntry="YES"/>
                                     </textField>
-                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="VNL-S5-z7K"/>
+                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="VNL-S5-z7K">
+                                        <frame key="frameInset" minY="70" width="303"/>
+                                    </activityIndicatorView>
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JAM-Gi-goy">
@@ -104,13 +106,13 @@
         <!--Root View Controller-->
         <scene sceneID="b0c-bS-ySy">
             <objects>
-                <tableViewController id="j1Z-D8-kfW" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="voW-4S-Khl">
+                <tableViewController id="j1Z-D8-kfW" customClass="MyPostsController" customModule="BlogClient" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="voW-4S-Khl" customClass="MyPosts">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="SUd-mA-ybm">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="myPostsTableCell" id="SUd-mA-ybm">
                                 <rect key="frame" x="0.0" y="92" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SUd-mA-ybm" id="XQR-HL-1Ys">
@@ -125,7 +127,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Root View Controller" id="rYP-C5-1Vl">
-                        <barButtonItem key="leftBarButtonItem" title="Logout" id="39p-Ic-PC1"/>
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="39p-Ic-PC1">
+                            <connections>
+                                <action selector="logout:" destination="j1Z-D8-kfW" id="eME-kH-GuJ"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="asdfasdf" id="CC1-VS-lRu"/>
                     </navigationItem>
                 </tableViewController>
@@ -167,11 +173,13 @@
             </objects>
             <point key="canvasLocation" x="3126" y="411"/>
         </scene>
-        <!--Item-->
+        <!--Blog-->
         <scene sceneID="TQg-ye-iar">
             <objects>
                 <navigationController id="q8a-yA-Tmf" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="DoV-Cj-5fk"/>
+                    <tabBarItem key="tabBarItem" title="Blog" image="News" id="DoV-Cj-5fk">
+                        <inset key="imageInsets" minX="3" minY="3" maxX="0.0" maxY="3"/>
+                    </tabBarItem>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="uu7-Ni-Nw4">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -184,11 +192,14 @@
             </objects>
             <point key="canvasLocation" x="2404" y="411"/>
         </scene>
-        <!--Item-->
+        <!--My Entries-->
         <scene sceneID="05I-rx-ETA">
             <objects>
                 <navigationController id="t5W-Qc-jjv" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="NJx-QG-ZhB"/>
+                    <tabBarItem key="tabBarItem" title="My Entries" image="Home" selectedImage="Home" id="NJx-QG-ZhB">
+                        <inset key="imageInsets" minX="3" minY="3" maxX="0.0" maxY="2"/>
+                        <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="0.0"/>
+                    </tabBarItem>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="NIp-Bl-SNx">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -275,7 +286,9 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress"/>
                                     </textField>
-                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="P3M-pT-aJX"/>
+                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="P3M-pT-aJX">
+                                        <frame key="frameInset" minY="150" width="303"/>
+                                    </activityIndicatorView>
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f31-iZ-dbK">
@@ -327,4 +340,8 @@
             <point key="canvasLocation" x="-641" y="694"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Home" width="38" height="38"/>
+        <image name="News" width="38" height="38"/>
+    </resources>
 </document>

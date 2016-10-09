@@ -8,6 +8,14 @@
 
 import UIKit
 
+struct Post {
+    let created:String
+    let subject:String
+    let content:String
+    let postid:Int64
+    let ownerid:Int64 // This can come back as null from the server
+}
+
 struct BlogServerAPI{
     fileprivate static let serverAddress = "http://localhost:8080/blog"
     fileprivate static let serverLogin = serverAddress + "/login"
@@ -34,4 +42,24 @@ extension BlogServerAPI {
         request.addValue("ios", forHTTPHeaderField: "api")
         return request
     }
+    
+    static func getAllPostsFromServer() -> URLRequest {
+        let url = URL(string: serverAddress + ".json")!
+        return URLRequest(url: url)
+    }
+    
+    static func parseJSONFromServer(_ input: [String:Any]) -> Post? {
+        guard let created = input["created"] as? String else { print("created broke");return nil }
+        guard let subject = input["subject"] as? String else { print("subject broke");return nil }
+        guard let content = input["content"] as? String else { print("content broke");return nil }
+        guard let postid = input["postid"] as? Int else { print("postid broke");return nil }
+        
+        let owneridString = (input["ownerid"] as? String) ?? ""
+        let owneridInt64 = (input["ownerid"] as? Int64) ?? 0
+        
+        let ownerid = owneridString.isEmpty ? owneridInt64 : 0
+        
+        return Post(created: created, subject: subject, content: content, postid: Int64(postid), ownerid: ownerid)
+    }
+    
 }

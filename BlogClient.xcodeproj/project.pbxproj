@@ -21,6 +21,7 @@
 		1E44EEE21DA8951A0054C5A2 /* BlogServerAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E44EEE11DA8951A0054C5A2 /* BlogServerAPI.swift */; };
 		1E78C8691DA9689600FA6A94 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E78C8681DA9689600FA6A94 /* UserDefaults.swift */; };
 		1E78C86B1DA9973900FA6A94 /* SharedViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E78C86A1DA9973900FA6A94 /* SharedViewExtensions.swift */; };
+		1E78C86F1DA9BFE400FA6A94 /* MyPostsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E78C86E1DA9BFE400FA6A94 /* MyPostsController.swift */; };
 		1ED81BC81DA83FDE004D252F /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED81BC71DA83FDE004D252F /* SignupViewController.swift */; };
 		1ED81BCA1DA84162004D252F /* Keyboard Controll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED81BC91DA84162004D252F /* Keyboard Controll.swift */; };
 /* End PBXBuildFile section */
@@ -42,6 +43,7 @@
 		1E44EEE11DA8951A0054C5A2 /* BlogServerAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlogServerAPI.swift; sourceTree = "<group>"; };
 		1E78C8681DA9689600FA6A94 /* UserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		1E78C86A1DA9973900FA6A94 /* SharedViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedViewExtensions.swift; sourceTree = "<group>"; };
+		1E78C86E1DA9BFE400FA6A94 /* MyPostsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPostsController.swift; sourceTree = "<group>"; };
 		1ED81BC71DA83FDE004D252F /* SignupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
 		1ED81BC91DA84162004D252F /* Keyboard Controll.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Keyboard Controll.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -103,6 +105,7 @@
 		1E44EED81DA8798D0054C5A2 /* view */ = {
 			isa = PBXGroup;
 			children = (
+				1E78C86E1DA9BFE400FA6A94 /* MyPostsController.swift */,
 				1ED81BC71DA83FDE004D252F /* SignupViewController.swift */,
 				1E0D3BB31DA7308F009B3E40 /* LoginViewController.swift */,
 			);
@@ -207,6 +210,7 @@
 				1E78C86B1DA9973900FA6A94 /* SharedViewExtensions.swift in Sources */,
 				1E44EEE21DA8951A0054C5A2 /* BlogServerAPI.swift in Sources */,
 				1E44EED61DA877CB0054C5A2 /* SharedErrorHandeling.swift in Sources */,
+				1E78C86F1DA9BFE400FA6A94 /* MyPostsController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

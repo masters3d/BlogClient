@@ -11,6 +11,8 @@ import UIKit
 
 class LoginViewController: UIViewController, ErrorReporting {
 
+    @IBAction func unwindSegue(_ segue: UIStoryboardSegue) { }
+
     // Error Handeling
     var errorReported: Error?
     var isAlertPresenting: Bool = false
@@ -57,25 +59,23 @@ class LoginViewController: UIViewController, ErrorReporting {
     // Error handeling for Data
     override func viewDidAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if let (username, password ) = UserDefaults.getUserCredentials() {
+        if let (username, password ) = UserDefaults.getUserCredentials(),
+           let cookie = UserDefaults.getCookie(){
             self.username.text = username
             self.password.text = password
+            
+            // setting cookie if not set
+            if let _ =  HTTPCookieStorage.shared.cookies?.filter({$0.value == cookie.value}).first {}
+                else { HTTPCookieStorage.shared.setCookie(cookie) }
+        } else {
+            self.username.text = ""
+            self.password.text = ""
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         assingDelegateToTextFields(textFields)
-        if let (username, password ) = UserDefaults.getUserCredentials(),
-         let cookie = UserDefaults.getCookie(){
-            self.username.text = username
-            self.password.text = password
-        
-        if let _ =  HTTPCookieStorage.shared.cookies?.filter({$0.value == cookie.value}).first {
-            print("Found cookie")
-        }
-            else { HTTPCookieStorage.shared.setCookie(cookie) }
-        }
     }
     
     // Activity updating from network
