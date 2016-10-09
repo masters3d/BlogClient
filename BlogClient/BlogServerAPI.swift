@@ -17,7 +17,8 @@ struct Post {
 }
 
 struct BlogServerAPI{
-    fileprivate static let serverAddress = "http://localhost:8080/blog"
+    fileprivate static let serverAddress = "https://cheyomasters3d.appspot.com/blog"
+    //fileprivate static let serverAddress = "http://localhost:8080/blog"
     fileprivate static let serverLogin = serverAddress + "/login"
     fileprivate static let serverSignup = serverAddress + "/signup"
 
@@ -45,7 +46,9 @@ extension BlogServerAPI {
     
     static func getAllPostsFromServer() -> URLRequest {
         let url = URL(string: serverAddress + ".json")!
-        return URLRequest(url: url)
+        var request = URLRequest(url: url)
+        request.addValue("ios", forHTTPHeaderField: "api")
+        return request
     }
     
     static func parseJSONFromServer(_ input: [String:Any]) -> Post? {
