@@ -46,7 +46,6 @@ class LoginViewController: UIViewController, ErrorReporting {
                 DispatchQueue.main.async {
                     self.performSegue(withIdentifier: "loginSegue", sender: nil)
                 }
-                
             } else {
                 DispatchQueue.main.async {
                     self.presentErrorPopUp(serverResponse)

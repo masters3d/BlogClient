@@ -11,7 +11,8 @@ import CoreData
 
 class DataController {
 
-    let shared = DataController()
+   static let shared = DataController()
+   private static let shareCoreData = CoreDataStack()
     
     var errorHandlerDelegate:ErrorReporting? { didSet{
         if let delegate = errorHandlerDelegate {

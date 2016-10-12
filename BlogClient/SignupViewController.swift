@@ -9,7 +9,7 @@
 import UIKit
 
 class SignupViewController: UIViewController,ErrorReporting {
-
+    
     // Error Handeling
     var errorReported: Error?
     var isAlertPresenting: Bool = false

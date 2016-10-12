@@ -12,7 +12,7 @@ import CoreData
 final class CoreDataStack {
  
     static let shared = CoreDataStack()
-    var errorHandler: (Error) -> Void = {_ in }
+    var errorHandler: (Error) -> Void = {print($0)}
     
     lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "DataModel")

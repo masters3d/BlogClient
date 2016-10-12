@@ -7,9 +7,24 @@
 //
 
 import UIKit
+import CoreData
 
+class MyPostsController:UITableViewController, ErrorReporting, NSFetchedResultsControllerDelegate {
 
-class MyPostsController:UITableViewController, ErrorReporting {
+    //Core Data
+    var fetchedResultsController:NSFetchedResultsController<BlogPost> = {
+            let temp:NSFetchRequest<BlogPost> = BlogPost.fetchRequest()
+            temp.sortDescriptors = [NSSortDescriptor(key: "last_modified", ascending: false)]
+            temp.returnsObjectsAsFaults = false
+            var nfrc = NSFetchedResultsController<BlogPost>.init(fetchRequest: temp, managedObjectContext: CoreDataStack.shared.viewContext, sectionNameKeyPath: nil, cacheName: "Master")
+        
+            do {
+                try nfrc.performFetch()
+            } catch {
+                print(error)
+            }
+            return nfrc
+            }()
     // Error Handeling
     var errorReported: Error?
     var isAlertPresenting: Bool = false
@@ -21,8 +36,6 @@ class MyPostsController:UITableViewController, ErrorReporting {
         self.refreshControl?.endRefreshing()
     }
     
-    var content:[Post] = [] {didSet{ self.tableView.reloadData()}}
-    
     @IBAction func logout(_ sender: UIBarButtonItem) {
         self.logoutPerformer()
     }
@@ -31,28 +44,8 @@ class MyPostsController:UITableViewController, ErrorReporting {
         super.viewDidLoad()
         self.refreshControl = UIRefreshControl()
         self.refreshControl?.addTarget(self, action: #selector(self.handleRefresh), for: UIControlEvents.valueChanged)
-        
-        let requestOperation = NetworkOperation.init(urlRequest: BlogServerAPI.getAllPostsFromServer(), sessionName: "allBlogPost", errorDelegate: self) { (data, response) in
-            guard let data = data,
-            let json = try? JSONSerialization.jsonObject(with: data, options: []),
-            let array = json as? [[String:Any]] else { return }
-            
-            DispatchQueue.main.async {
-                
-                for each in array {
-                guard let post = BlogServerAPI.parseJSONFromServer(each) else {
-                print("post could not be decoded")
-                continue
-                }
-                print(post)
-                self.content.append(post)
-            }
-                
-            self.tableView.reloadData()
-            }
-        }
-        requestOperation.start()
-        
+        BlogServerAPI.getAllPostsFromServer()
+
     }
     
     func handleRefresh(){
@@ -62,14 +55,16 @@ class MyPostsController:UITableViewController, ErrorReporting {
     // MARK: - Table view
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //TODO:- Should I do different rows? Should I use a fetch contoller here?
-        return content.count
+        let sectionInfo = self.fetchedResultsController.sections?[section]
+        return sectionInfo?.numberOfObjects ?? 0
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "myPostsTableCell", for: indexPath)
         //TODO:- Need to set up the cell here for content. Can I do different size content?
-        cell.detailTextLabel?.text = content[indexPath.row].content
-        cell.textLabel?.text = content[indexPath.row].content
+        let object = self.fetchedResultsController.object(at: indexPath)
+        cell.detailTextLabel?.text = object.content
+        cell.textLabel?.text = object.content
         return cell
     }
 
@@ -77,4 +72,10 @@ class MyPostsController:UITableViewController, ErrorReporting {
         //TODO:- I should probalby show a seprate view to edit the blog post
     }
     
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        self.tableView.reloadData()
+    }
 }
+
+
+

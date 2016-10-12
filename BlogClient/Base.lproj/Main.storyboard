@@ -103,11 +103,11 @@
             </objects>
             <point key="canvasLocation" x="318" y="36"/>
         </scene>
-        <!--Root View Controller-->
+        <!--MyPostsController-->
         <scene sceneID="b0c-bS-ySy">
             <objects>
-                <tableViewController id="j1Z-D8-kfW" customClass="MyPostsController" customModule="BlogClient" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="voW-4S-Khl" customClass="MyPosts">
+                <tableViewController id="j1Z-D8-kfW" userLabel="MyPostsController" customClass="MyPostsController" customModule="BlogClient" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="voW-4S-Khl">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -116,14 +116,14 @@
                                 <rect key="frame" x="0.0" y="92" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SUd-mA-ybm" id="XQR-HL-1Ys">
-                                    <frame key="frameInset" width="375" height="43"/>
+                                    <frame key="frameInset" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>
                         <connections>
-                            <outlet property="dataSource" destination="j1Z-D8-kfW" id="1yx-Sc-VMg"/>
-                            <outlet property="delegate" destination="j1Z-D8-kfW" id="Gkx-Ec-WrM"/>
+                            <outlet property="dataSource" destination="j1Z-D8-kfW" id="jcU-FG-yso"/>
+                            <outlet property="delegate" destination="j1Z-D8-kfW" id="ESp-1K-hV5"/>
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Root View Controller" id="rYP-C5-1Vl">
@@ -152,7 +152,7 @@
                                 <rect key="frame" x="0.0" y="92" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Rel-IG-vBw" id="7qu-cY-JXf">
-                                    <frame key="frameInset" width="375" height="43"/>
+                                    <frame key="frameInset" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
