@@ -16,7 +16,8 @@ class MyPostsController:UITableViewController, ErrorReporting, NSFetchedResultsC
             let temp:NSFetchRequest<BlogPost> = BlogPost.fetchRequest()
             temp.sortDescriptors = [NSSortDescriptor(key: "last_modified", ascending: false)]
             temp.returnsObjectsAsFaults = false
-            var nfrc = NSFetchedResultsController<BlogPost>.init(fetchRequest: temp, managedObjectContext: CoreDataStack.shared.viewContext, sectionNameKeyPath: nil, cacheName: "Master")
+            //temp.predicate = NSPredicate.init(format: "ownerid == %@", argumentArray: [5171003185430528])
+            var nfrc = NSFetchedResultsController<BlogPost>.init(fetchRequest: temp, managedObjectContext: CoreDataStack.shared.viewContext, sectionNameKeyPath: nil, cacheName: nil)
         
             do {
                 try nfrc.performFetch()
@@ -44,12 +45,12 @@ class MyPostsController:UITableViewController, ErrorReporting, NSFetchedResultsC
         super.viewDidLoad()
         self.refreshControl = UIRefreshControl()
         self.refreshControl?.addTarget(self, action: #selector(self.handleRefresh), for: UIControlEvents.valueChanged)
-        BlogServerAPI.getAllPostsFromServer()
-
+        self.fetchedResultsController.delegate = self
+        BlogServerAPI.getAllPostsFromServer(delegate: self)
     }
     
     func handleRefresh(){
-    //TODO:- code to handle the pull down refresh of the table
+        BlogServerAPI.getAllPostsFromServer(delegate: self)
     }
     
     // MARK: - Table view
@@ -74,6 +75,7 @@ class MyPostsController:UITableViewController, ErrorReporting, NSFetchedResultsC
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         self.tableView.reloadData()
+        self.activityIndicatorStop()
     }
 }
 

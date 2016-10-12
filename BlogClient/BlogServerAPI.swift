@@ -45,15 +45,14 @@ extension BlogServerAPI {
         return request
     }
     
-    static func getAllPostsFromServer(){
+    static func getAllPostsFromServer(delegate:ErrorReporting){
         let url = URL(string: serverAddress + ".json")!
         var request = URLRequest(url: url)
         request.addValue("ios", forHTTPHeaderField: "api")
-        let requestOperation = NetworkOperation.init(urlRequest: request, sessionName: "allBlogPost", errorDelegate: nil) { (data, response) in
+        let requestOperation = NetworkOperation.init(urlRequest: request, sessionName: "allBlogPost", errorDelegate: delegate) { (data, response) in
             guard let data = data,
                 let json = try? JSONSerialization.jsonObject(with: data, options: []),
                 let array = json as? [[String:Any]] else { return }
-            //let scratchMangedContex = CoreDataStack.shared.backgroundContext
             for each in array {
                 guard let postData = parseJSONFromServer(each) else {
                     print("post could not be decoded")
@@ -66,20 +65,14 @@ extension BlogServerAPI {
                 context.performAndWait {
 
                 let fetchRequest:NSFetchRequest<BlogPost> = BlogPost.fetchRequest()
-                
                 fetchRequest.returnsObjectsAsFaults = false
                 fetchRequest.sortDescriptors = [NSSortDescriptor(key: "last_modified", ascending: false)]
-
                 //TODO:-- Got to try to get this from GDC and do try catch so see the errror.
                 
                 var all = [BlogPost]()
                 
                 do {
-                //TODO:- ERRRRRRRR
-                    
                   all =  try fetchRequest.execute()
-                  
-                 
                 } catch {
                     print(error)
                 }
@@ -97,7 +90,6 @@ extension BlogServerAPI {
                 }
             }
             }// perfomr and wait
-            //CoreDataStack.shared.saveContext()
         }
         requestOperation.start()
     }
