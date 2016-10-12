@@ -60,39 +60,43 @@ extension BlogServerAPI {
                     continue
                 }
                 
-                CoreDataStack.shared.performBackgroundTask({ (objectContext) in
-                   
+                let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+                context.parent = CoreDataStack.shared.viewContext
                 
-                
+                context.performAndWait {
+
                 let fetchRequest:NSFetchRequest<BlogPost> = BlogPost.fetchRequest()
-                fetchRequest.predicate = NSPredicate(format: "postid == %@", argumentArray: [postData.postid])
                 
                 fetchRequest.returnsObjectsAsFaults = false
                 fetchRequest.sortDescriptors = [NSSortDescriptor(key: "last_modified", ascending: false)]
 
                 //TODO:-- Got to try to get this from GDC and do try catch so see the errror.
                 
-                var found = [BlogPost]()
+                var all = [BlogPost]()
                 
                 do {
-                  found =  try objectContext.fetch(fetchRequest)
+                //TODO:- ERRRRRRRR
+                    
+                  all =  try fetchRequest.execute()
+                  
+                 
                 } catch {
                     print(error)
                 }
                 
-                guard let first = found.first
+                guard let first = all.filter({$0.postid == postData.postid}).first
                     else {
                            // This creates the post on core data
-                          // _ = BlogPost(post)
-                          // CoreDataStack.shared.saveContext()
+                           _ = BlogPost(postData)
+                           CoreDataStack.shared.saveContext()
                             return }
                 
-                //if !(first.dataStruct == postData) {
-                    //first.coredataCopyDataContents(post)
-                    //CoreDataStack.shared.saveContext()
-                //}
-            }) // end of background task
+                if !(first.dataStruct == postData) {
+                    first.coredataCopyDataContents(postData)
+                    CoreDataStack.shared.saveContext()
+                }
             }
+            }// perfomr and wait
             //CoreDataStack.shared.saveContext()
         }
         requestOperation.start()
