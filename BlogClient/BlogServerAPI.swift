@@ -53,31 +53,42 @@ extension BlogServerAPI {
             guard let data = data,
                 let json = try? JSONSerialization.jsonObject(with: data, options: []),
                 let array = json as? [[String:Any]] else { return }
-            for each in array {
-                guard let postData = parseJSONFromServer(each) else {
-                    print("post could not be decoded")
-                    continue
-                }
-                
-                let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
-                context.parent = CoreDataStack.shared.viewContext
-                
-                context.performAndWait {
-
+            
+            var allCoreDataResults = [BlogPost]()
+            let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+            context.parent = CoreDataStack.shared.viewContext
+            
+            context.performAndWait {
                 let fetchRequest:NSFetchRequest<BlogPost> = BlogPost.fetchRequest()
                 fetchRequest.returnsObjectsAsFaults = false
                 fetchRequest.sortDescriptors = [NSSortDescriptor(key: "last_modified", ascending: false)]
-                //TODO:-- Got to try to get this from GDC and do try catch so see the errror.
-                
-                var all = [BlogPost]()
                 
                 do {
-                  all =  try fetchRequest.execute()
+                  allCoreDataResults =  try fetchRequest.execute()
                 } catch {
                     print(error)
                 }
+            } // End Of context
+
+            
+            let resultsServer = array.flatMap(parseJSONFromServer)
+            
+            // Delect when blog post are deleted outside of the app.
+            if resultsServer.count < allCoreDataResults.count {
+                    let postIdFromServer = resultsServer.map({$0.postid})
+                    let postIdnotOnServer = allCoreDataResults.map({$0.dataStruct.postid}).filter({!postIdFromServer.contains($0)})
+                    let objectsToRemove = allCoreDataResults.filter({postIdnotOnServer.contains($0.postid)})
                 
-                guard let first = all.filter({$0.postid == postData.postid}).first
+                    objectsToRemove.forEach({ (coreDataBlogPost) in
+                        CoreDataStack.shared.viewContext.delete(coreDataBlogPost)
+                    })
+                    CoreDataStack.shared.saveContext()
+            }
+            
+            resultsServer.forEach({ (postData) in
+                
+                
+                guard let first = allCoreDataResults.filter({$0.postid == postData.postid}).first
                     else {
                            // This creates the post on core data
                            _ = BlogPost(postData)
@@ -88,8 +99,7 @@ extension BlogServerAPI {
                     first.coredataCopyDataContents(postData)
                     CoreDataStack.shared.saveContext()
                 }
-            }
-            }// perfomr and wait
+            })
         }
         requestOperation.start()
     }
