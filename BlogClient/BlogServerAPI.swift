@@ -45,6 +45,22 @@ extension BlogServerAPI {
         return request
     }
     
+    static func deletePostFromServer(postId:Int64, delegate:ErrorReporting) {
+        let url = URL(string: serverAddress + "/\(postId)")!
+        var request = URLRequest(url: url)
+        request.httpShouldHandleCookies = true
+        //let headers = HTTPCookie.requestHeaderFields(with: HTTPCookieStorage.shared.cookies ?? [] )
+        //request.allHTTPHeaderFields = headers
+        request.httpMethod = "DELETE"
+        request.addValue("ios", forHTTPHeaderField: "api")
+        let requestOperation = NetworkOperation.init(urlRequest: request, sessionName: "deletePostID-\(postId)", errorDelegate: delegate) { (data, response) in
+            //success code after delte
+            print("succesfully delte \(postId)")
+        }
+
+        requestOperation.start()
+    }
+    
     static func getAllPostsFromServer(delegate:ErrorReporting){
         let url = URL(string: serverAddress + ".json")!
         var request = URLRequest(url: url)
@@ -68,29 +84,24 @@ extension BlogServerAPI {
                 } catch {
                     print(error)
                 }
-            } // End Of context
-
             
             let resultsServer = array.flatMap(parseJSONFromServer)
             
-            // Delect when blog post are deleted outside of the app.
+            // Detect when blog post are deleted outside of the app.
             if resultsServer.count < allCoreDataResults.count {
                     let postIdFromServer = resultsServer.map({$0.postid})
                     let postIdnotOnServer = allCoreDataResults.map({$0.dataStruct.postid}).filter({!postIdFromServer.contains($0)})
                     let objectsToRemove = allCoreDataResults.filter({postIdnotOnServer.contains($0.postid)})
                 
                     objectsToRemove.forEach({ (coreDataBlogPost) in
-                        CoreDataStack.shared.viewContext.delete(coreDataBlogPost)
+                        context.delete(coreDataBlogPost)
                     })
-                    CoreDataStack.shared.saveContext()
+                   _ = try? context.save()
             }
             
             resultsServer.forEach({ (postData) in
-                
-                
                 guard let first = allCoreDataResults.filter({$0.postid == postData.postid}).first
-                    else {
-                           // This creates the post on core data
+                    else {   // This creates the post on core data
                            _ = BlogPost(postData)
                            CoreDataStack.shared.saveContext()
                             return }
@@ -101,6 +112,7 @@ extension BlogServerAPI {
                 }
             })
         }
+        } // End Of context
         requestOperation.start()
     }
     

@@ -101,7 +101,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="318" y="36"/>
+            <point key="canvasLocation" x="319" y="63"/>
         </scene>
         <!--MyPostsController-->
         <scene sceneID="b0c-bS-ySy">
@@ -126,18 +126,92 @@
                             <outlet property="delegate" destination="j1Z-D8-kfW" id="ESp-1K-hV5"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="rYP-C5-1Vl">
+                    <navigationItem key="navigationItem" title="My Posts" id="rYP-C5-1Vl">
                         <barButtonItem key="leftBarButtonItem" title="Logout" id="39p-Ic-PC1">
                             <connections>
                                 <action selector="logout:" destination="j1Z-D8-kfW" id="eME-kH-GuJ"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="asdfasdf" id="CC1-VS-lRu"/>
+                        <barButtonItem key="rightBarButtonItem" title="asdfasdf" systemItem="add" id="CC1-VS-lRu">
+                            <connections>
+                                <segue destination="cO9-MY-wG0" kind="show" id="Rg0-t1-Fnp"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oSA-h1-JCR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3126" y="-233"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="fXL-8a-yHL">
+            <objects>
+                <viewController id="cO9-MY-wG0" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="O28-sO-xne"/>
+                        <viewControllerLayoutGuide type="bottom" id="3JN-jo-jfJ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="0I8-a4-ZHN">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UTi-Dg-f1g">
+                                <attributedString key="attributedText">
+                                    <fragment content="cheyomasters3d.appspot.com">
+                                        <attributes>
+                                            <font key="NSFont" size="13" name="AmericanTypewriter"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gtl-48-dgq">
+                                <attributedString key="attributedText">
+                                    <fragment content="Add New Entry">
+                                        <attributes>
+                                            <font key="NSFont" size="17" name="AmericanTypewriter"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gaj-Wq-Ytf">
+                                <frame key="frameInset" minX="164" minY="184" width="34" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Content" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="55X-MG-vyu">
+                                <frame key="frameInset" minX="164" minY="227" width="62" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Pg6-qg-UBq">
+                                <frame key="frameInset" minX="101" minY="272" width="97" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="gtl-48-dgq" firstAttribute="leading" secondItem="UTi-Dg-f1g" secondAttribute="leading" id="40s-4S-o4Y"/>
+                            <constraint firstItem="UTi-Dg-f1g" firstAttribute="top" secondItem="O28-sO-xne" secondAttribute="bottom" constant="20" id="8Z0-xg-saM"/>
+                            <constraint firstItem="gtl-48-dgq" firstAttribute="width" secondItem="UTi-Dg-f1g" secondAttribute="width" id="CdL-s0-fVg"/>
+                            <constraint firstItem="UTi-Dg-f1g" firstAttribute="centerX" secondItem="0I8-a4-ZHN" secondAttribute="centerX" id="OKB-hy-b0G"/>
+                            <constraint firstItem="gtl-48-dgq" firstAttribute="top" secondItem="UTi-Dg-f1g" secondAttribute="bottom" constant="10" id="rHO-H7-AlM"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hRe-oB-SkL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4240.8000000000002" y="-233.43328335832086"/>
         </scene>
         <!--Root View Controller-->
         <scene sceneID="blS-wd-fWy">
@@ -165,7 +239,11 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Root View Controller" id="J5f-nY-n3C">
                         <barButtonItem key="leftBarButtonItem" title="Logout" id="XVv-zN-4lh"/>
-                        <barButtonItem key="rightBarButtonItem" title="asdfasdf" id="xoz-LY-Leq"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="xoz-LY-Leq">
+                            <connections>
+                                <segue destination="cO9-MY-wG0" kind="show" id="YNX-cd-lcG"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </tableViewController>
@@ -344,4 +422,7 @@
         <image name="Home" width="38" height="38"/>
         <image name="News" width="38" height="38"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="YNX-cd-lcG"/>
+    </inferredMetricsTieBreakers>
 </document>

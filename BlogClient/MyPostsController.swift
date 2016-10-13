@@ -16,9 +16,9 @@ class MyPostsController:UITableViewController, ErrorReporting, NSFetchedResultsC
             let temp:NSFetchRequest<BlogPost> = BlogPost.fetchRequest()
             temp.sortDescriptors = [NSSortDescriptor(key: "last_modified", ascending: false)]
             temp.returnsObjectsAsFaults = false
-            //temp.predicate = NSPredicate.init(format: "ownerid == %@", argumentArray: [5171003185430528])
+            let id = Int(UserDefaults.getUserIdSaved())
+            temp.predicate = NSPredicate(format: "ownerid == %@", argumentArray: [id])
             var nfrc = NSFetchedResultsController<BlogPost>.init(fetchRequest: temp, managedObjectContext: CoreDataStack.shared.viewContext, sectionNameKeyPath: nil, cacheName: nil)
-        
             do {
                 try nfrc.performFetch()
             } catch {
@@ -47,6 +47,7 @@ class MyPostsController:UITableViewController, ErrorReporting, NSFetchedResultsC
         self.refreshControl?.addTarget(self, action: #selector(self.handleRefresh), for: UIControlEvents.valueChanged)
         self.fetchedResultsController.delegate = self
         BlogServerAPI.getAllPostsFromServer(delegate: self)
+        self.tableView.allowsMultipleSelectionDuringEditing = false
     }
     
     func handleRefresh(){
@@ -76,6 +77,29 @@ class MyPostsController:UITableViewController, ErrorReporting, NSFetchedResultsC
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         self.tableView.reloadData()
         self.activityIndicatorStop()
+    }
+    
+    //Table view Editing - Deleting.
+    
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        let id = UserDefaults.getUserIdSaved()
+        if fetchedResultsController.object(at: indexPath).ownerid == id  {
+            return true
+        }
+        return false
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        switch editingStyle {
+        case .delete:
+            let object = fetchedResultsController.object(at: indexPath)
+            BlogServerAPI.deletePostFromServer(postId: object.postid, delegate: self)
+            CoreDataStack.shared.viewContext.delete(object)
+            CoreDataStack.shared.saveContext()
+        default:
+            break
+        }
+    
     }
 }
 

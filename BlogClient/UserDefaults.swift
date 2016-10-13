@@ -26,6 +26,14 @@ extension UserDefaults {
         return cookie
     }
     
+    static func getUserIdSaved() -> Int64 {
+        guard let cookie = getCookie()  else { return 0 }
+        guard let idString =  cookie.value.components(separatedBy: "|").first  else { return 0 }
+        guard let number = Int64(idString)  else { return 0 }
+       
+        return number
+    }
+    
     static func setUserCredentials(username:String, password:String) {
         standard.set(password, forKey: "password")
         standard.set(username, forKey: "username")

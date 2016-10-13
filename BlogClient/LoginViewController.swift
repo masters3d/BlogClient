@@ -75,6 +75,7 @@ class LoginViewController: UIViewController, ErrorReporting {
     override func viewDidLoad() {
         super.viewDidLoad()
         assingDelegateToTextFields(textFields)
+       HTTPCookieStorage.shared.cookieAcceptPolicy = .always
     }
     
     // Activity updating from network
