@@ -10,17 +10,18 @@ import UIKit
 import CoreData
 
 // Server Date ISO Formatter
-extension Date{
+extension Date {
     static let serverISOFormatter = { () -> DateFormatter in let dateFormat = DateFormatter()
-        dateFormat.timeZone = TimeZone(abbreviation: "PST")! // Server Timezone
+        dateFormat.timeZone = TimeZone(abbreviation: "UTC")! // Server Timezone
         dateFormat.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS"
         return dateFormat
     }()
+    
 }
 
 struct BlogServerAPI{
 //    fileprivate static let serverAddress = "https://cheyomasters3d.appspot.com/blog"
-    fileprivate static let serverAddress = "http://localhost:8080/blog"
+    static let serverAddress = "http://localhost:8080/blog"
     fileprivate static let serverLogin = serverAddress + "/login"
     fileprivate static let serverSignup = serverAddress + "/signup"
 }
@@ -45,7 +46,8 @@ extension BlogServerAPI {
         return request
     }
     
-    static func deletePostFromServer(postId:Int64, delegate:ErrorReporting) {
+    static func deletePostFromServer(postId:Int64, delegate:ErrorReporting,
+    successBlock:@escaping (Data?, HTTPURLResponse?) -> Void = { (data, response) in print("succesfully deleted")}) {
         let url = URL(string: serverAddress + "/\(postId)")!
         var request = URLRequest(url: url)
         request.httpShouldHandleCookies = true
@@ -53,11 +55,22 @@ extension BlogServerAPI {
         //request.allHTTPHeaderFields = headers
         request.httpMethod = "DELETE"
         request.addValue("ios", forHTTPHeaderField: "api")
-        let requestOperation = NetworkOperation.init(urlRequest: request, sessionName: "deletePostID-\(postId)", errorDelegate: delegate) { (data, response) in
-            //success code after delte
-            print("succesfully delte \(postId)")
+        let requestOperation = NetworkOperation(urlRequest: request, sessionName: "deletePostID-\(postId)", errorDelegate: delegate, successBlock: successBlock)
+        requestOperation.start()
+    }
+    
+    static func getUsernameWithId(_ userID:Int64,delegate:ErrorReporting?) {
+        let url = URL(string: serverAddress + "/userid/" + "\(userID)")!
+        var request = URLRequest(url: url)
+        request.addValue("ios", forHTTPHeaderField: "api")
+        let requestOperation = NetworkOperation.init(urlRequest: request, sessionName: "requestUserNameFor\(userID)", errorDelegate: delegate) { (data, response) in
+            guard let response = response,
+                let serverResponse = response.allHeaderFields["server-response"] as? String
+                else { DispatchQueue.main.async {
+                    delegate?.reportErrorFromOperation(NSError.init(domain: "There was an error getting user name for post", code: 0, userInfo: nil)) }
+                    return }
+                UserDefaults.idToUserMap[String(userID)] = serverResponse
         }
-
         requestOperation.start()
     }
     

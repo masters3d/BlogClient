@@ -52,4 +52,14 @@ extension UserDefaults {
         standard.set(nil, forKey: "cookie")
     }
     
+    static var idToUserMap:Dictionary<String,String> {
+        get {
+        guard let dict = UserDefaults.standard.dictionary(forKey: "idToUserMapDict") else {
+             UserDefaults.standard.set([String:String](), forKey: "idToUserMapDict")
+             return [String:String]()
+        }
+        return dict as! Dictionary<String,String> }
+        set { UserDefaults.standard.set(newValue, forKey: "idToUserMapDict") }
+    }
+    
 }

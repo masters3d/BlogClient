@@ -12,20 +12,8 @@ import CoreData
 class MyPostsController:UITableViewController, ErrorReporting, NSFetchedResultsControllerDelegate {
 
     //Core Data
-    var fetchedResultsController:NSFetchedResultsController<BlogPost> = {
-            let temp:NSFetchRequest<BlogPost> = BlogPost.fetchRequest()
-            temp.sortDescriptors = [NSSortDescriptor(key: "last_modified", ascending: false)]
-            temp.returnsObjectsAsFaults = false
-            let id = Int(UserDefaults.getUserIdSaved())
-            temp.predicate = NSPredicate(format: "ownerid == %@", argumentArray: [id])
-            var nfrc = NSFetchedResultsController<BlogPost>.init(fetchRequest: temp, managedObjectContext: CoreDataStack.shared.viewContext, sectionNameKeyPath: nil, cacheName: nil)
-            do {
-                try nfrc.performFetch()
-            } catch {
-                print(error)
-            }
-            return nfrc
-            }()
+    var fetchedResultsController:NSFetchedResultsController<BlogPost> = DataController.shared.createFetchController()
+    
     // Error Handeling
     var errorReported: Error?
     var isAlertPresenting: Bool = false
@@ -48,6 +36,9 @@ class MyPostsController:UITableViewController, ErrorReporting, NSFetchedResultsC
         self.fetchedResultsController.delegate = self
         BlogServerAPI.getAllPostsFromServer(delegate: self)
         self.tableView.allowsMultipleSelectionDuringEditing = false
+        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.estimatedRowHeight = 300
+        
     }
     
     func handleRefresh(){
@@ -62,14 +53,25 @@ class MyPostsController:UITableViewController, ErrorReporting, NSFetchedResultsC
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "myPostsTableCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "myPostsTableCell", for: indexPath) as! TableViewCell
         //TODO:- Need to set up the cell here for content. Can I do different size content?
         let object = self.fetchedResultsController.object(at: indexPath)
-        cell.detailTextLabel?.text = object.content
-        cell.textLabel?.text = object.content
+        cell.postTitle.text = object.subject
+        cell.postContent.text = object.content?.replacingOccurrences(of: "<br>", with: "\n")
+        cell.postOwner.text = "by: \(DataController.shared.getUserNameForUserId(object.ownerid))"
+        cell.lastModified.text = DateFormatter.localizedString(from: (object.last_modified as? Date) ?? Date(), dateStyle: .medium, timeStyle: .medium)
+        cell.accessoryType = .detailButton
+
         return cell
     }
 
+    override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
+        
+        let url = URL.init(string: BlogServerAPI.serverAddress + "/\(fetchedResultsController.object(at: indexPath).postid)")!
+        
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        
+    }
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //TODO:- I should probalby show a seprate view to edit the blog post
     }
@@ -93,15 +95,18 @@ class MyPostsController:UITableViewController, ErrorReporting, NSFetchedResultsC
         switch editingStyle {
         case .delete:
             let object = fetchedResultsController.object(at: indexPath)
-            BlogServerAPI.deletePostFromServer(postId: object.postid, delegate: self)
-            CoreDataStack.shared.viewContext.delete(object)
-            CoreDataStack.shared.saveContext()
+            BlogServerAPI.deletePostFromServer(postId: object.postid, delegate: self) {_,_ in
+                // success block
+                DataController.shared.deletePersistedObject(object)
+            }
+          
         default:
             break
         }
     
     }
 }
+
 
 
 

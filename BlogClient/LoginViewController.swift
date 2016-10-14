@@ -22,6 +22,17 @@ class LoginViewController: UIViewController, ErrorReporting {
     @IBOutlet weak var username: UITextField!
     @IBOutlet weak var password: UITextField!
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+       guard let identifier = segue.identifier else {print("Invalide identifier"); return}
+        switch identifier {
+        case "loginSegue":
+            //iniciate a new view controller
+            (segue.destination as! UITabBarController).createBlogViewController()
+        default:
+            break
+        }
+    }
+    
     @IBAction func login(_ sender: UIButton) {
     
         guard let username = username.text,
@@ -36,7 +47,7 @@ class LoginViewController: UIViewController, ErrorReporting {
             guard let response = response,
                 let serverResponse = response.allHeaderFields["server-response"] as? String
                 else { DispatchQueue.main.async {
-                    self.presentErrorPopUp("There was an network error") }
+                    self.presentErrorPopUp("There was a network error") }
                     return }
             if serverResponse == "success" {
                 print(response)

@@ -8,8 +8,28 @@
 
 import UIKit
 
-extension ErrorReporting where Self : UIViewController  {
 
+
+extension UITabBarController {
+
+func createBlogViewController(){
+    
+    let navigation = UINavigationController()
+    
+    let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MyPostController") as! MyPostsController
+    viewController.fetchedResultsController = DataController.shared.createFetchController(predicate: nil)
+    
+    navigation.addChildViewController(viewController)
+    self.viewControllers?.append(navigation)
+    
+    navigation.tabBarItem = UITabBarItem.init(title: nil, image: #imageLiteral(resourceName: "News"), tag: 0)
+    
+    viewController.title = "All Posts"
+}
+
+}
+
+extension ErrorReporting where Self : UIViewController  {
 
     // Log out for all views
     func logoutPerformer() {
