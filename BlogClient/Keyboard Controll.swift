@@ -16,8 +16,18 @@ extension UIViewController:UITextFieldDelegate, UITextViewDelegate {
     func keyboardWillHide(_ notification: Notification) {
         view.frame.origin.y = 0.0
     }
+    
+    func getKeyboardHeight(_ notification: Notification) -> CGFloat {
+        let userInfo = (notification as NSNotification).userInfo
+        let keyboardSize =
+            userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
+        return keyboardSize.cgRectValue.height
+    }
+    
     // this needs to be overitten by class that wants keboard support
     func keyboardWillShow(_ notification: Notification) {
+        // Get keyboard gets the current size of the keyboard
+        //view.frame.origin.y = -getKeyboardHeight(notification)
     }
 
     func subscribeToKeyboardNotifications() {
@@ -29,6 +39,8 @@ extension UIViewController:UITextFieldDelegate, UITextViewDelegate {
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
+    
+
 
     // Hide the keyboard when user hits the return key
     public func textFieldShouldReturn(_ textField: UITextField) -> Bool {

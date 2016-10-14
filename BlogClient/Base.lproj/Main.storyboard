@@ -234,7 +234,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" keyboardDismissMode="interactive" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="6SF-Mb-Evf">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="6SF-Mb-Evf">
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -242,6 +242,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" translatesAutoresizingMaskIntoConstraints="NO" id="4yg-6J-4Ka">
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M7M-d1-KQB">
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <state key="normal" title="Delete">
                                             <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
@@ -251,6 +252,7 @@
                                     </button>
                                     <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="5pC-yw-twG"/>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tdW-Ru-Pa8">
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <state key="normal" title="Post"/>
                                         <connections>
                                             <action selector="postToServer:" destination="cO9-MY-wG0" eventType="touchUpInside" id="Bei-Sr-iof"/>
@@ -262,12 +264,12 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="gtl-48-dgq" firstAttribute="leading" secondItem="UTi-Dg-f1g" secondAttribute="leading" id="40s-4S-o4Y"/>
-                            <constraint firstItem="6SF-Mb-Evf" firstAttribute="top" secondItem="Pg6-qg-UBq" secondAttribute="bottom" constant="40" id="6oH-qn-HIE"/>
+                            <constraint firstItem="6SF-Mb-Evf" firstAttribute="top" secondItem="Pg6-qg-UBq" secondAttribute="bottom" constant="35" id="6oH-qn-HIE"/>
                             <constraint firstItem="UTi-Dg-f1g" firstAttribute="top" secondItem="O28-sO-xne" secondAttribute="bottom" constant="20" id="8Z0-xg-saM"/>
-                            <constraint firstItem="6SF-Mb-Evf" firstAttribute="top" secondItem="55X-MG-vyu" secondAttribute="bottom" constant="5" id="8ja-Z9-isM"/>
+                            <constraint firstItem="6SF-Mb-Evf" firstAttribute="top" secondItem="55X-MG-vyu" secondAttribute="bottom" id="8ja-Z9-isM"/>
                             <constraint firstItem="gtl-48-dgq" firstAttribute="width" secondItem="UTi-Dg-f1g" secondAttribute="width" id="CdL-s0-fVg"/>
                             <constraint firstItem="6SF-Mb-Evf" firstAttribute="leading" secondItem="0I8-a4-ZHN" secondAttribute="leadingMargin" constant="20" id="Eal-zU-Izl"/>
-                            <constraint firstItem="Pg6-qg-UBq" firstAttribute="top" secondItem="gaj-Wq-Ytf" secondAttribute="bottom" constant="5" id="H0T-Sj-B8I"/>
+                            <constraint firstItem="Pg6-qg-UBq" firstAttribute="top" secondItem="gaj-Wq-Ytf" secondAttribute="bottom" id="H0T-Sj-B8I"/>
                             <constraint firstItem="4yg-6J-4Ka" firstAttribute="centerX" secondItem="0I8-a4-ZHN" secondAttribute="centerX" id="H2h-Ws-5ej"/>
                             <constraint firstItem="4yg-6J-4Ka" firstAttribute="width" secondItem="0I8-a4-ZHN" secondAttribute="width" multiplier="0.5" id="IIp-aF-76B"/>
                             <constraint firstItem="UTi-Dg-f1g" firstAttribute="centerX" secondItem="0I8-a4-ZHN" secondAttribute="centerX" id="OKB-hy-b0G"/>
@@ -279,7 +281,7 @@
                             <constraint firstItem="Pg6-qg-UBq" firstAttribute="top" secondItem="gtl-48-dgq" secondAttribute="bottom" constant="45" id="qo0-78-ubM"/>
                             <constraint firstItem="gtl-48-dgq" firstAttribute="top" secondItem="UTi-Dg-f1g" secondAttribute="bottom" constant="10" id="rHO-H7-AlM"/>
                             <constraint firstItem="gaj-Wq-Ytf" firstAttribute="leading" secondItem="0I8-a4-ZHN" secondAttribute="leadingMargin" constant="20" id="rwW-F4-hnz"/>
-                            <constraint firstItem="4yg-6J-4Ka" firstAttribute="top" secondItem="6SF-Mb-Evf" secondAttribute="bottom" constant="5" id="zdt-ra-VJ2"/>
+                            <constraint firstItem="4yg-6J-4Ka" firstAttribute="top" secondItem="6SF-Mb-Evf" secondAttribute="bottom" id="zdt-ra-VJ2"/>
                         </constraints>
                     </view>
                     <connections>

@@ -27,18 +27,28 @@ class NewPostAndEdit:UIViewController, ErrorReporting {
     @IBAction func postToServer(_ sender: UIButton) {
     }
     
-    func textViewDidBeginEditing(_ textView: UITextView) {
-       print( view.gestureRecognizers?.count)
-        //TODO:- change this so it is not fixed
-         view.frame.origin.y = -130
+    override func keyboardWillShow(_ notification: Notification) {
+        if self.contentField.isFirstResponder {
+        let point = contentField.superview?.convert(contentField.frame.origin, to: nil)
+        let yLocation = point!.y + contentField.frame.height + 28 // 28 is the buttons heigh
+        let yDiference = view.frame.height - yLocation // different betwen height and loc
+            view.frame.origin.y =  -(getKeyboardHeight(notification) - yDiference)
+        }
     }
     
     func dismissKeyboard() {
         view.endEditing(true)
     }
+
     
-    func textViewDidEndEditing(_ textView: UITextView) {
-        view.frame.origin.y = 0
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        subscribeToKeyboardNotifications()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        unsubscribeFromKeyboardNotifications()
     }
     
     override func viewDidLoad() {
