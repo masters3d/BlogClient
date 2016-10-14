@@ -36,9 +36,7 @@ class MyPostsController:UITableViewController, ErrorReporting, NSFetchedResultsC
         self.fetchedResultsController.delegate = self
         BlogServerAPI.getAllPostsFromServer(delegate: self)
         self.tableView.allowsMultipleSelectionDuringEditing = false
-        self.tableView.rowHeight = UITableViewAutomaticDimension
-        self.tableView.estimatedRowHeight = 300
-        
+        self.tableView.rowHeight = 200
     }
     
     func handleRefresh(){

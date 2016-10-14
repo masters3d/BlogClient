@@ -20,8 +20,8 @@ extension Date {
 }
 
 struct BlogServerAPI{
-//    fileprivate static let serverAddress = "https://cheyomasters3d.appspot.com/blog"
-    static let serverAddress = "http://localhost:8080/blog"
+     static let serverAddress = "https://cheyomasters3d.appspot.com/blog"
+//    static let serverAddress = "http://localhost:8080/blog"
     fileprivate static let serverLogin = serverAddress + "/login"
     fileprivate static let serverSignup = serverAddress + "/signup"
 }

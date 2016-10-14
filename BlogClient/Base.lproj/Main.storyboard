@@ -3,7 +3,9 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -55,9 +57,6 @@
                                     </textField>
                                     <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="VNL-S5-z7K"/>
                                 </subviews>
-                                <constraints>
-                                    <constraint firstItem="VNL-S5-z7K" firstAttribute="bottom" secondItem="BiN-PI-f7U" secondAttribute="bottom" id="Ekj-Mp-Ohx"/>
-                                </constraints>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JAM-Gi-goy">
                                 <state key="normal" title="Login">
@@ -186,10 +185,10 @@
             </objects>
             <point key="canvasLocation" x="3110" y="36"/>
         </scene>
-        <!--View Controller-->
+        <!--New Post And Edit-->
         <scene sceneID="fXL-8a-yHL">
             <objects>
-                <viewController id="cO9-MY-wG0" sceneMemberID="viewController">
+                <viewController id="cO9-MY-wG0" customClass="NewPostAndEdit" customModule="BlogClient" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="O28-sO-xne"/>
                         <viewControllerLayoutGuide type="bottom" id="3JN-jo-jfJ"/>
@@ -220,48 +219,87 @@
                                 </attributedString>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gaj-Wq-Ytf">
-                                <frame key="frameInset" minX="164" minY="184" width="34" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subject" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gaj-Wq-Ytf">
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Content" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="55X-MG-vyu">
-                                <frame key="frameInset" minX="164" minY="227" width="62" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Pg6-qg-UBq">
-                                <frame key="frameInset" minX="101" minY="272" width="97" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Pg6-qg-UBq">
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Content" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="55X-MG-vyu">
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" keyboardDismissMode="interactive" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="6SF-Mb-Evf">
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" translatesAutoresizingMaskIntoConstraints="NO" id="4yg-6J-4Ka">
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M7M-d1-KQB">
+                                        <state key="normal" title="Delete">
+                                            <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="deleteOnServer:" destination="cO9-MY-wG0" eventType="touchUpInside" id="omb-dc-2U8"/>
+                                        </connections>
+                                    </button>
+                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="5pC-yw-twG"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tdW-Ru-Pa8">
+                                        <state key="normal" title="Post"/>
+                                        <connections>
+                                            <action selector="postToServer:" destination="cO9-MY-wG0" eventType="touchUpInside" id="Bei-Sr-iof"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="gtl-48-dgq" firstAttribute="leading" secondItem="UTi-Dg-f1g" secondAttribute="leading" id="40s-4S-o4Y"/>
+                            <constraint firstItem="6SF-Mb-Evf" firstAttribute="top" secondItem="Pg6-qg-UBq" secondAttribute="bottom" constant="40" id="6oH-qn-HIE"/>
                             <constraint firstItem="UTi-Dg-f1g" firstAttribute="top" secondItem="O28-sO-xne" secondAttribute="bottom" constant="20" id="8Z0-xg-saM"/>
+                            <constraint firstItem="6SF-Mb-Evf" firstAttribute="top" secondItem="55X-MG-vyu" secondAttribute="bottom" constant="5" id="8ja-Z9-isM"/>
                             <constraint firstItem="gtl-48-dgq" firstAttribute="width" secondItem="UTi-Dg-f1g" secondAttribute="width" id="CdL-s0-fVg"/>
+                            <constraint firstItem="6SF-Mb-Evf" firstAttribute="leading" secondItem="0I8-a4-ZHN" secondAttribute="leadingMargin" constant="20" id="Eal-zU-Izl"/>
+                            <constraint firstItem="Pg6-qg-UBq" firstAttribute="top" secondItem="gaj-Wq-Ytf" secondAttribute="bottom" constant="5" id="H0T-Sj-B8I"/>
+                            <constraint firstItem="4yg-6J-4Ka" firstAttribute="centerX" secondItem="0I8-a4-ZHN" secondAttribute="centerX" id="H2h-Ws-5ej"/>
+                            <constraint firstItem="4yg-6J-4Ka" firstAttribute="width" secondItem="0I8-a4-ZHN" secondAttribute="width" multiplier="0.5" id="IIp-aF-76B"/>
                             <constraint firstItem="UTi-Dg-f1g" firstAttribute="centerX" secondItem="0I8-a4-ZHN" secondAttribute="centerX" id="OKB-hy-b0G"/>
+                            <constraint firstItem="6SF-Mb-Evf" firstAttribute="height" secondItem="0I8-a4-ZHN" secondAttribute="width" multiplier="0.5" priority="900" id="WZ8-nY-bDG"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="6SF-Mb-Evf" secondAttribute="trailing" constant="20" id="XdJ-1I-DUN"/>
+                            <constraint firstItem="55X-MG-vyu" firstAttribute="leading" secondItem="0I8-a4-ZHN" secondAttribute="leadingMargin" constant="20" id="dWc-H5-kB2"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Pg6-qg-UBq" secondAttribute="trailing" constant="20" id="kTn-6x-S5N"/>
+                            <constraint firstItem="Pg6-qg-UBq" firstAttribute="leading" secondItem="0I8-a4-ZHN" secondAttribute="leadingMargin" constant="20" id="pSe-6W-cSh"/>
+                            <constraint firstItem="Pg6-qg-UBq" firstAttribute="top" secondItem="gtl-48-dgq" secondAttribute="bottom" constant="45" id="qo0-78-ubM"/>
                             <constraint firstItem="gtl-48-dgq" firstAttribute="top" secondItem="UTi-Dg-f1g" secondAttribute="bottom" constant="10" id="rHO-H7-AlM"/>
+                            <constraint firstItem="gaj-Wq-Ytf" firstAttribute="leading" secondItem="0I8-a4-ZHN" secondAttribute="leadingMargin" constant="20" id="rwW-F4-hnz"/>
+                            <constraint firstItem="4yg-6J-4Ka" firstAttribute="top" secondItem="6SF-Mb-Evf" secondAttribute="bottom" constant="5" id="zdt-ra-VJ2"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="actionLabel" destination="gtl-48-dgq" id="4JM-dL-UMe"/>
+                        <outlet property="activity" destination="5pC-yw-twG" id="NgF-ek-Q3P"/>
+                        <outlet property="contentField" destination="6SF-Mb-Evf" id="ehk-aE-IWI"/>
+                        <outlet property="deleteLabel" destination="M7M-d1-KQB" id="sm3-Tf-WaF"/>
+                        <outlet property="postLabel" destination="tdW-Ru-Pa8" id="TYO-Nv-qhb"/>
+                        <outlet property="subjectField" destination="Pg6-qg-UBq" id="QfP-W1-URM"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hRe-oB-SkL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3937" y="36"/>
+            <point key="canvasLocation" x="3936.8000000000002" y="35.532233883058474"/>
         </scene>
         <!--My Entries-->
         <scene sceneID="05I-rx-ETA">
             <objects>
                 <navigationController id="t5W-Qc-jjv" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="My Entries" image="Home" selectedImage="Home" id="NJx-QG-ZhB">
-                        <inset key="imageInsets" minX="3" minY="3" maxX="0.0" maxY="2"/>
                         <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="0.0"/>
                     </tabBarItem>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="NIp-Bl-SNx">
