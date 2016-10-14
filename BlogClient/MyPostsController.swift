@@ -12,7 +12,7 @@ import CoreData
 class MyPostsController:UITableViewController, ErrorReporting, NSFetchedResultsControllerDelegate {
 
     //Core Data
-    var fetchedResultsController:NSFetchedResultsController<BlogPost> = DataController.shared.createFetchController()
+   lazy var fetchedResultsController:NSFetchedResultsController<BlogPost> = DataController.shared.createFetchController(predicate: NSPredicate(format: "ownerid == %@", argumentArray: [Int(UserDefaults.getUserIdSaved())]))
     
     // Error Handeling
     var errorReported: Error?
@@ -46,8 +46,20 @@ class MyPostsController:UITableViewController, ErrorReporting, NSFetchedResultsC
     }
     
     // MARK: - Table view
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return (self.fetchedResultsController.sections ?? []).count
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        let indexPath = IndexPath.init(row: 0, section: section)
+        let name = DataController.shared.getUserNameForUserId(fetchedResultsController.object(at: indexPath).ownerid)
+        return "User: \(name)"
+    }
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 40
+    }
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //TODO:- Should I do different rows? Should I use a fetch contoller here?
         let sectionInfo = self.fetchedResultsController.sections?[section]
         return sectionInfo?.numberOfObjects ?? 0
     }
