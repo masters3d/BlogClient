@@ -22,8 +22,9 @@ final class CoreDataStack {
                 self?.errorHandler(error)
             }
         print("Location of SQL file for Core Data")
-        let applicationSupportURL = FileManager.default.urls(for: FileManager.SearchPathDirectory.applicationSupportDirectory, in: .userDomainMask).last
-          print(applicationSupportURL)
+
+          container.viewContext.mergePolicy = NSMergePolicy(merge: .mergeByPropertyObjectTrumpMergePolicyType)
+
             })
         return container
     }()

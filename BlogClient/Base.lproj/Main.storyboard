@@ -176,7 +176,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="asdfasdf" systemItem="add" id="CC1-VS-lRu">
                             <connections>
-                                <segue destination="cO9-MY-wG0" kind="show" id="Rg0-t1-Fnp"/>
+                                <segue destination="cO9-MY-wG0" kind="presentation" id="Rg0-t1-Fnp"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -188,7 +188,7 @@
         <!--New Post And Edit-->
         <scene sceneID="fXL-8a-yHL">
             <objects>
-                <viewController id="cO9-MY-wG0" customClass="NewPostAndEdit" customModule="BlogClient" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NewPostAndEdit" id="cO9-MY-wG0" customClass="NewPostAndEdit" customModule="BlogClient" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="O28-sO-xne"/>
                         <viewControllerLayoutGuide type="bottom" id="3JN-jo-jfJ"/>
@@ -243,8 +243,8 @@
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M7M-d1-KQB">
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <state key="normal" title="Delete">
-                                            <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="Cancel">
+                                            <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
                                             <action selector="deleteOnServer:" destination="cO9-MY-wG0" eventType="touchUpInside" id="omb-dc-2U8"/>

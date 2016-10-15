@@ -20,8 +20,8 @@ extension Date {
 }
 
 struct BlogServerAPI{
-     static let serverAddress = "https://cheyomasters3d.appspot.com/blog"
-//    static let serverAddress = "http://localhost:8080/blog"
+//     static let serverAddress = "https://cheyomasters3d.appspot.com/blog"
+    static let serverAddress = "http://localhost:8080/blog"
     fileprivate static let serverLogin = serverAddress + "/login"
     fileprivate static let serverSignup = serverAddress + "/signup"
 }
@@ -46,18 +46,54 @@ extension BlogServerAPI {
         return request
     }
     
+
+    
     static func deletePostFromServer(postId:Int64, delegate:ErrorReporting,
     successBlock:@escaping (Data?, HTTPURLResponse?) -> Void = { (data, response) in print("succesfully deleted")}) {
         let url = URL(string: serverAddress + "/\(postId)")!
         var request = URLRequest(url: url)
         request.httpShouldHandleCookies = true
-        //let headers = HTTPCookie.requestHeaderFields(with: HTTPCookieStorage.shared.cookies ?? [] )
-        //request.allHTTPHeaderFields = headers
+        let headers = HTTPCookie.requestHeaderFields(with: HTTPCookieStorage.shared.cookies ?? [] )
+        request.allHTTPHeaderFields = headers
         request.httpMethod = "DELETE"
         request.addValue("ios", forHTTPHeaderField: "api")
         let requestOperation = NetworkOperation(urlRequest: request, sessionName: "deletePostID-\(postId)", errorDelegate: delegate, successBlock: successBlock)
         requestOperation.start()
     }
+    
+        static func addNewPostToServer(title:String,content:String, delegate:ErrorReporting,
+    successBlock:@escaping (Data?, HTTPURLResponse?) -> Void = { (data, response) in print("succesfully added new post")}) {
+    
+        let querry = ["subject":title, "content": content]
+        let urlParams = NetworkOperation.componentsMaker(baseUrl: serverAddress + "/newpost", querryKeyValue: querry)
+            
+        var request = URLRequest(url: urlParams!.url!)
+        request.httpShouldHandleCookies = true
+        let headers = HTTPCookie.requestHeaderFields(with: HTTPCookieStorage.shared.cookies ?? [] )
+        request.allHTTPHeaderFields = headers
+        request.httpMethod = "POST"
+        request.addValue("ios", forHTTPHeaderField: "api")
+        let requestOperation = NetworkOperation(urlRequest: request, sessionName: "newPost", errorDelegate: delegate, successBlock: successBlock)
+        requestOperation.start()
+    }
+    
+    static func updatePostOnServer(postId:Int64, title:String,content:String, delegate:ErrorReporting,
+    successBlock:@escaping (Data?, HTTPURLResponse?) -> Void = { (data, response) in print("succesfully added new post")}) {
+    
+        let querry = ["subject":title, "content": content]
+        let urlParams = NetworkOperation.componentsMaker(baseUrl: serverAddress + "/\(postId)", querryKeyValue: querry)
+            
+        var request = URLRequest(url: urlParams!.url!)
+        request.httpShouldHandleCookies = true
+        let headers = HTTPCookie.requestHeaderFields(with: HTTPCookieStorage.shared.cookies ?? [] )
+        request.allHTTPHeaderFields = headers
+        request.httpMethod = "POST"
+        request.addValue("ios", forHTTPHeaderField: "api")
+        let requestOperation = NetworkOperation(urlRequest: request, sessionName: "updatePost\(postId)", errorDelegate: delegate, successBlock: successBlock)
+        requestOperation.start()
+    }
+    
+    
     
     static func getUsernameWithId(_ userID:Int64,delegate:ErrorReporting?) {
         let url = URL(string: serverAddress + "/userid/" + "\(userID)")!
@@ -119,9 +155,12 @@ extension BlogServerAPI {
                            CoreDataStack.shared.saveContext()
                             return }
                 
-                if !(first.dataStruct == postData) {
+                if (first.dataStruct != postData) {
+                CoreDataStack.shared.viewContext.performAndWait {
                     first.coredataCopyDataContents(postData)
                     CoreDataStack.shared.saveContext()
+                }
+                    
                 }
             })
         }

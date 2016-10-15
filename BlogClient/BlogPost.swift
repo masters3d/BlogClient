@@ -8,21 +8,9 @@
 
 import CoreData
 
-extension BlogPost {
-
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<BlogPost> {
-        return NSFetchRequest<BlogPost>(entityName: "BlogPost");
-    }
-
-    @NSManaged public var content: String?
-    @NSManaged public var created: NSDate?
-    @NSManaged public var last_modified: NSDate?
-    @NSManaged public var ownerid: Int64
-    @NSManaged public var postid: Int64
-    @NSManaged public var subject: String?
-
+func != (lhs:BlogPostData, rhs:BlogPostData) -> Bool{
+    return !(lhs == rhs)
 }
-
 
 func == (lhs:BlogPostData, rhs:BlogPostData) -> Bool{
     return lhs.subject == rhs.subject &&
@@ -50,28 +38,6 @@ var dataStruct:BlogPostData { return BlogPostData(subject: subject ?? "", conten
 
 extension BlogPost {
 
-//static func coreDataNewObjectWithBackgroundContext(subject: String, content: String, created: NSDate?, last_modified: NSDate?, ownerid: Int64, postid: Int64) -> BlogPost {
-//    let obj = BlogPost(context:CoreDataStack.shared.backgroundContext)
-//    obj.subject = subject
-//    obj.content = content
-//    obj.created = created
-//    obj.last_modified = last_modified
-//    obj.ownerid = ownerid
-//    obj.postid = postid
-//    return obj
-//}
-
-//func coredataCopyObjectToViewContent() -> BlogPost{
-//    let obj = BlogPost(context:CoreDataStack.shared.viewContext)
-//    obj.subject = subject
-//    obj.content = content
-//    obj.created = created
-//    obj.last_modified = last_modified
-//    obj.ownerid = ownerid
-//    obj.postid = postid
-//    return obj
-//}
-
 convenience init(_ obj:BlogPostData){
     self.init(context:CoreDataStack.shared.viewContext)
     subject = obj.subject
@@ -89,12 +55,19 @@ func coredataCopyDataContents(_ obj:BlogPostData){
     last_modified = obj.last_modified
     ownerid = obj.ownerid
     postid = obj.postid
-}
-
 
 }
 
+func coredataCopyDataContentsOLD(_ obj:BlogPostData){
+    self.setValue(obj.subject, forKey: "subject")
+    self.setValue(obj.content, forKey: "content")
+    self.setValue(obj.created, forKey: "created")
+    self.setValue(obj.last_modified, forKey: "last_modified")
+    self.setValue(NSNumber.init(value: obj.ownerid), forKey: "ownerid")
+    self.setValue(NSNumber.init(value: obj.postid), forKey: "postid")
+}
 
 
-//    static func coreDataObject(height: Double, imageData: Data, title: String, width: Double, photo_id:String, pin:PinAnnotation, timeCreated:Date = Date()) -> Photo {
-//        let photo = NSEntityDescription.insertNewObject(forEntityName: "Photo", into:  CoreDataStack.shared.viewContext) as! Photo
+
+}
+

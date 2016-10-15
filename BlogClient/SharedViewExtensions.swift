@@ -9,7 +9,6 @@
 import UIKit
 
 
-
 extension UITabBarController {
 
 func createBlogViewController(){
@@ -18,6 +17,11 @@ func createBlogViewController(){
     
     let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MyPostController") as! MyPostsController
     viewController.fetchedResultsController = DataController.shared.createFetchController(predicate: nil)
+    viewController.navigationItem.rightBarButtonItems?.removeAll()
+    
+    let button = viewController.editButtonItem
+    viewController.navigationItem.setRightBarButton(button, animated: true)
+
     
     navigation.addChildViewController(viewController)
     self.viewControllers?.append(navigation)

@@ -42,8 +42,6 @@ class DataController {
             let temp:NSFetchRequest<BlogPost> = BlogPost.fetchRequest()
             temp.sortDescriptors = [NSSortDescriptor(key: "last_modified", ascending: false)]
             temp.returnsObjectsAsFaults = false
-            //let id = Int(UserDefaults.getUserIdSaved())
-            //temp.predicate = NSPredicate(format: "ownerid == %@", argumentArray: [id])
             temp.predicate = predicate
             let nfrc = NSFetchedResultsController<BlogPost>.init(fetchRequest: temp, managedObjectContext: CoreDataStack.shared.viewContext, sectionNameKeyPath: "ownerid", cacheName: nil)
             do {

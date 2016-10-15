@@ -87,6 +87,13 @@ class LoginViewController: UIViewController, ErrorReporting {
         super.viewDidLoad()
         assingDelegateToTextFields(textFields)
        HTTPCookieStorage.shared.cookieAcceptPolicy = .always
+       
+       //If there is a cookies saved. Continue to data
+        if let _ = UserDefaults.getCookie() {
+            DispatchQueue.main.async {
+                self.performSegue(withIdentifier: "loginSegue", sender: nil)
+            }
+        }
     }
     
     // Activity updating from network

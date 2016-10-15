@@ -29,6 +29,10 @@ class MyPostsController:UITableViewController, ErrorReporting, NSFetchedResultsC
         self.logoutPerformer()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        BlogServerAPI.getAllPostsFromServer(delegate: self)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.refreshControl = UIRefreshControl()
@@ -64,15 +68,29 @@ class MyPostsController:UITableViewController, ErrorReporting, NSFetchedResultsC
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "myPostsTableCell", for: indexPath) as! TableViewCell
-        //TODO:- Need to set up the cell here for content. Can I do different size content?
         let object = self.fetchedResultsController.object(at: indexPath)
+        //        //UITableViewCellSelectionStyleNone
+        if object.ownerid != UserDefaults.getUserIdSaved() {
+            cell.selectionStyle = .none
+            cell.accessoryType = .detailButton
+        } else {
+            cell.accessoryType = .detailDisclosureButton
+        }
+        
         cell.postTitle.text = object.subject
         cell.postContent.text = object.content?.replacingOccurrences(of: "<br>", with: "\n")
         cell.postOwner.text = "by: \(DataController.shared.getUserNameForUserId(object.ownerid))"
         cell.lastModified.text = DateFormatter.localizedString(from: (object.last_modified as? Date) ?? Date(), dateStyle: .medium, timeStyle: .medium)
-        cell.accessoryType = .detailButton
-
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
+        let obj = fetchedResultsController.object(at: indexPath)
+        guard let content = obj.content, let subject = obj.subject else {
+            return "Delete from Server"
+        }
+        let count = content.components(separatedBy: " ").count + subject.components(separatedBy: " ").count
+        return "Delete \(count) words from Server"
     }
 
     override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
@@ -80,10 +98,19 @@ class MyPostsController:UITableViewController, ErrorReporting, NSFetchedResultsC
         let url = URL.init(string: BlogServerAPI.serverAddress + "/\(fetchedResultsController.object(at: indexPath).postid)")!
         
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
-        
     }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //TODO:- I should probalby show a seprate view to edit the blog post
+        let object = fetchedResultsController.object(at: indexPath)
+        if object.ownerid != UserDefaults.getUserIdSaved() {
+            // not allowing to edit posts you do not own.
+            return
+        }
+    
+        let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NewPostAndEdit") as! NewPostAndEdit
+        viewController.editingMode = true
+        viewController.postToEditOnServer = object
+        self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
