@@ -49,6 +49,7 @@ convenience init(_ obj:BlogPostData){
 }
 
 func coredataCopyDataContents(_ obj:BlogPostData){
+    print((CoreDataStack.shared.viewContext.mergePolicy as! NSMergePolicy).mergeType.rawValue)
     subject = obj.subject
     content = obj.content
     created = obj.created

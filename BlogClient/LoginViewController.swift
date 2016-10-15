@@ -33,6 +33,7 @@ class LoginViewController: UIViewController, ErrorReporting {
         }
     }
     
+    @IBOutlet weak var loginButton: UIButton!
     @IBAction func login(_ sender: UIButton) {
     
         guard let username = username.text,
@@ -53,10 +54,7 @@ class LoginViewController: UIViewController, ErrorReporting {
                 print(response)
                 UserDefaults.setCookie(with: response)
                 UserDefaults.setUserCredentials(username: username, password: password)
-                print(HTTPCookieStorage.shared.cookies)
-                DispatchQueue.main.async {
-                    self.performSegue(withIdentifier: "loginSegue", sender: nil)
-                }
+                self.perfromLoginSeque()
             } else {
                 DispatchQueue.main.async {
                     self.presentErrorPopUp(serverResponse)
@@ -64,6 +62,14 @@ class LoginViewController: UIViewController, ErrorReporting {
             }
         }
     operation.start()
+    }
+    
+    func perfromLoginSeque() {
+            BlogServerAPI.getAllPostsFromServer(delegate: self) {
+              DispatchQueue.main.async {
+                    self.performSegue(withIdentifier: "loginSegue", sender: nil)
+                }
+            }
     }
     
     // Error handeling for Data
@@ -80,6 +86,7 @@ class LoginViewController: UIViewController, ErrorReporting {
         } else {
             self.username.text = ""
             self.password.text = ""
+            
         }
     }
     
@@ -90,18 +97,18 @@ class LoginViewController: UIViewController, ErrorReporting {
        
        //If there is a cookies saved. Continue to data
         if let _ = UserDefaults.getCookie() {
-            DispatchQueue.main.async {
-                self.performSegue(withIdentifier: "loginSegue", sender: nil)
-            }
+            perfromLoginSeque()
         }
     }
     
     // Activity updating from network
     func activityIndicatorStart() {
         activity.startAnimating()
+        self.loginButton.isEnabled = false
     }
     func activityIndicatorStop() {
         activity.stopAnimating()
+        self.loginButton.isEnabled = true
     }
     
 }

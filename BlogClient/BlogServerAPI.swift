@@ -20,8 +20,8 @@ extension Date {
 }
 
 struct BlogServerAPI{
-//     static let serverAddress = "https://cheyomasters3d.appspot.com/blog"
-    static let serverAddress = "http://localhost:8080/blog"
+     static let serverAddress = "https://cheyomasters3d.appspot.com/blog"
+//    static let serverAddress = "http://localhost:8080/blog"
     fileprivate static let serverLogin = serverAddress + "/login"
     fileprivate static let serverSignup = serverAddress + "/signup"
 }
@@ -46,15 +46,20 @@ extension BlogServerAPI {
         return request
     }
     
-
+    static func getHeadersFromSavedCookies() -> [String : String] {
+       if let cookie = UserDefaults.getCookie() {
+            return HTTPCookie.requestHeaderFields(with: [cookie] )
+       } else {
+            return [:]
+       }
+    }
     
     static func deletePostFromServer(postId:Int64, delegate:ErrorReporting,
     successBlock:@escaping (Data?, HTTPURLResponse?) -> Void = { (data, response) in print("succesfully deleted")}) {
         let url = URL(string: serverAddress + "/\(postId)")!
         var request = URLRequest(url: url)
         request.httpShouldHandleCookies = true
-        let headers = HTTPCookie.requestHeaderFields(with: HTTPCookieStorage.shared.cookies ?? [] )
-        request.allHTTPHeaderFields = headers
+        request.allHTTPHeaderFields = getHeadersFromSavedCookies()
         request.httpMethod = "DELETE"
         request.addValue("ios", forHTTPHeaderField: "api")
         let requestOperation = NetworkOperation(urlRequest: request, sessionName: "deletePostID-\(postId)", errorDelegate: delegate, successBlock: successBlock)
@@ -69,8 +74,7 @@ extension BlogServerAPI {
             
         var request = URLRequest(url: urlParams!.url!)
         request.httpShouldHandleCookies = true
-        let headers = HTTPCookie.requestHeaderFields(with: HTTPCookieStorage.shared.cookies ?? [] )
-        request.allHTTPHeaderFields = headers
+        request.allHTTPHeaderFields = getHeadersFromSavedCookies()
         request.httpMethod = "POST"
         request.addValue("ios", forHTTPHeaderField: "api")
         let requestOperation = NetworkOperation(urlRequest: request, sessionName: "newPost", errorDelegate: delegate, successBlock: successBlock)
@@ -85,8 +89,7 @@ extension BlogServerAPI {
             
         var request = URLRequest(url: urlParams!.url!)
         request.httpShouldHandleCookies = true
-        let headers = HTTPCookie.requestHeaderFields(with: HTTPCookieStorage.shared.cookies ?? [] )
-        request.allHTTPHeaderFields = headers
+        request.allHTTPHeaderFields = getHeadersFromSavedCookies()
         request.httpMethod = "POST"
         request.addValue("ios", forHTTPHeaderField: "api")
         let requestOperation = NetworkOperation(urlRequest: request, sessionName: "updatePost\(postId)", errorDelegate: delegate, successBlock: successBlock)
@@ -110,7 +113,7 @@ extension BlogServerAPI {
         requestOperation.start()
     }
     
-    static func getAllPostsFromServer(delegate:ErrorReporting){
+    static func getAllPostsFromServer(delegate:ErrorReporting, successBlock: @escaping () -> Void = {}){
         let url = URL(string: serverAddress + ".json")!
         var request = URLRequest(url: url)
         request.addValue("ios", forHTTPHeaderField: "api")
@@ -156,12 +159,16 @@ extension BlogServerAPI {
                             return }
                 
                 if (first.dataStruct != postData) {
-                CoreDataStack.shared.viewContext.performAndWait {
                     first.coredataCopyDataContents(postData)
-                    CoreDataStack.shared.saveContext()
+                       do {
+                        try first.managedObjectContext?.save()
+                       } catch {
+                            print("there was an error saving update to coredataobject")
+                            print(error)
+                       }
                 }
-                    
-                }
+                //
+                successBlock()
             })
         }
         } // End Of context

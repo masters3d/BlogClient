@@ -16,7 +16,7 @@ func createBlogViewController(){
     let navigation = UINavigationController()
     
     let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MyPostController") as! MyPostsController
-    viewController.fetchedResultsController = DataController.shared.createFetchController(predicate: nil)
+    viewController.fetchedResultsController = DataController.shared.createFetchController(predicate: nil, returnAsFaults:true)
     viewController.navigationItem.rightBarButtonItems?.removeAll()
     
     let button = viewController.editButtonItem

@@ -52,36 +52,41 @@ class NewPostAndEdit:UIViewController, ErrorReporting {
         self.deleteLabel.isHidden = true
         
         if let post = postToEditOnServer {
-            subjectField.text = post.subject
-            contentField.text = post.content
+            subjectField.text = post.subject?.replacingOccurrences(of: "<br>", with: "\n")
+            contentField.text = post.content?.replacingOccurrences(of: "<br>", with: "\n")
         }
     }
     
    override var prefersStatusBarHidden: Bool { return !editingMode }
     
     @IBAction func postToServer(_ sender: UIButton) {
-    
-    guard let title = subjectField.text, let content = contentField.text else { return }
-    
-    guard !title.isEmpty && !content.isEmpty else { self.presentErrorPopUp("Text fields can't be blank"); return }
-    
+        
+        guard let title = subjectField.text, let content = contentField.text else { return }
+        
+        guard !title.isEmpty && !content.isEmpty else { self.presentErrorPopUp("Text fields can't be blank"); return }
+        
         if sender.titleLabel?.text == "Post" {
             BlogServerAPI.addNewPostToServer(title: title, content: content, delegate: self) { (data, response) in
                 // checking to see if tehre was some kind of response then dismiss
                 if let _ = data {
-                DispatchQueue.main.async {
-                    self.dismiss(animated: true, completion: nil )
+                    DispatchQueue.main.async {
+                        self.dismiss(animated: true, completion: nil )
+                    }
                 }
-            }
             }
         }
         if sender.titleLabel?.text == "Update" {
-            guard let object = postToEditOnServer else { print("no post passed in to edit"); return }
+            guard let object = postToEditOnServer, object.postid != 0
+                else {
+                        self.presentErrorPopUp("Post no longer avalible to edit")
+                        return }
+
+            
             BlogServerAPI.updatePostOnServer(postId: object.postid, title: title, content: content, delegate: self) { (data, response) in
                 print(response)
                 if let _ = response {
                     DispatchQueue.main.async {
-                 _ =  self.navigationController?.popViewController(animated: true)
+                        _ =  self.navigationController?.popViewController(animated: true)
                     }
                 }
             }

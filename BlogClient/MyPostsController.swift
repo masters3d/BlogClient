@@ -114,6 +114,7 @@ class MyPostsController:UITableViewController, ErrorReporting, NSFetchedResultsC
     }
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+       _ = try? controller.performFetch()
         self.tableView.reloadData()
         self.activityIndicatorStop()
     }

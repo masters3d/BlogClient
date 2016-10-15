@@ -38,10 +38,10 @@ class DataController {
         }
     }
     
-    func createFetchController(predicate:NSPredicate? ) -> NSFetchedResultsController<BlogPost>{
+    func createFetchController(predicate:NSPredicate?, returnAsFaults:Bool = false ) -> NSFetchedResultsController<BlogPost>{
             let temp:NSFetchRequest<BlogPost> = BlogPost.fetchRequest()
             temp.sortDescriptors = [NSSortDescriptor(key: "last_modified", ascending: false)]
-            temp.returnsObjectsAsFaults = false
+            temp.returnsObjectsAsFaults = returnAsFaults
             temp.predicate = predicate
             let nfrc = NSFetchedResultsController<BlogPost>.init(fetchRequest: temp, managedObjectContext: CoreDataStack.shared.viewContext, sectionNameKeyPath: "ownerid", cacheName: nil)
             do {

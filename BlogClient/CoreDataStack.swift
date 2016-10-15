@@ -21,11 +21,11 @@ final class CoreDataStack {
                 NSLog("CoreData error \(error), \(error._userInfo)")
                 self?.errorHandler(error)
             }
-        print("Location of SQL file for Core Data")
-
-          container.viewContext.mergePolicy = NSMergePolicy(merge: .mergeByPropertyObjectTrumpMergePolicyType)
-
+        print("Core Data set")
             })
+        
+        container.viewContext.mergePolicy = NSMergePolicy(merge: .mergeByPropertyObjectTrumpMergePolicyType)
+
         return container
     }()
     
@@ -54,7 +54,7 @@ final class CoreDataStack {
             do {
                 try context.save()
             } catch {
-                NSLog("CoreData error \(error), \(error._userInfo)")
+                NSLog("CoreData Save error \(error), \(error._userInfo)")
                 self.errorHandler(error)
             }
         }

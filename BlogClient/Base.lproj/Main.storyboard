@@ -92,6 +92,7 @@
                     </view>
                     <connections>
                         <outlet property="activity" destination="VNL-S5-z7K" id="Smj-Gs-M9q"/>
+                        <outlet property="loginButton" destination="JAM-Gi-goy" id="J6t-IS-UyF"/>
                         <outlet property="password" destination="BiN-PI-f7U" id="PdN-BC-LOS"/>
                         <outlet property="username" destination="Pak-6f-L8Z" id="feY-DK-zdr"/>
                         <outletCollection property="textFields" destination="Pak-6f-L8Z" collectionClass="NSMutableArray" id="8Wk-3s-Pmk"/>
@@ -389,9 +390,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress"/>
                                     </textField>
-                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="P3M-pT-aJX">
-                                        <frame key="frameInset" minY="150" width="303"/>
-                                    </activityIndicatorView>
+                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="P3M-pT-aJX"/>
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f31-iZ-dbK">
