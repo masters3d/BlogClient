@@ -95,9 +95,11 @@ class NewPostAndEdit:UIViewController, ErrorReporting {
     
     // activity update
     func activityIndicatorStart() {
+        self.postLabel.isEnabled = false
         self.activity.startAnimating()
     }
     func activityIndicatorStop() {
+        self.postLabel.isEnabled = true
         self.activity.stopAnimating()
     }
     

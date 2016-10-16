@@ -210,7 +210,7 @@ extension NetworkOperation {
     }
 }
 
-//MARK: -  CONFIGURATION SAMPLE // Make this internal to use
+//MARK: -  CONFIGURATION SAMPLE Make this internal to use
 
 fileprivate enum ConnectionType {
     case sample
@@ -219,7 +219,6 @@ fileprivate enum ConnectionType {
         switch self {
         case .sample:
             return "sample"
-//      default: return ""
         }
     }
 }

@@ -59,16 +59,5 @@ func coredataCopyDataContents(_ obj:BlogPostData){
 
 }
 
-func coredataCopyDataContentsOLD(_ obj:BlogPostData){
-    self.setValue(obj.subject, forKey: "subject")
-    self.setValue(obj.content, forKey: "content")
-    self.setValue(obj.created, forKey: "created")
-    self.setValue(obj.last_modified, forKey: "last_modified")
-    self.setValue(NSNumber.init(value: obj.ownerid), forKey: "ownerid")
-    self.setValue(NSNumber.init(value: obj.postid), forKey: "postid")
-}
-
-
-
 }
 

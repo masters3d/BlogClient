@@ -69,7 +69,6 @@ class MyPostsController:UITableViewController, ErrorReporting, NSFetchedResultsC
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "myPostsTableCell", for: indexPath) as! TableViewCell
         let object = self.fetchedResultsController.object(at: indexPath)
-        //        //UITableViewCellSelectionStyleNone
         if object.ownerid != UserDefaults.getUserIdSaved() {
             cell.selectionStyle = .none
             cell.accessoryType = .detailButton
@@ -141,7 +140,6 @@ class MyPostsController:UITableViewController, ErrorReporting, NSFetchedResultsC
         default:
             break
         }
-    
     }
 }
 

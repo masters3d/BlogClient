@@ -166,11 +166,10 @@ extension BlogServerAPI {
                             print("there was an error saving update to coredataobject")
                             print(error)
                        }
-                }
-                //
+                    }
                 successBlock()
-            })
-        }
+                })
+            }
         } // End Of context
         requestOperation.start()
     }

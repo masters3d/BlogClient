@@ -21,7 +21,7 @@ final class CoreDataStack {
                 NSLog("CoreData error \(error), \(error._userInfo)")
                 self?.errorHandler(error)
             }
-        print("Core Data set")
+            print("Core Data set")
             })
         
         container.viewContext.mergePolicy = NSMergePolicy(merge: .mergeByPropertyObjectTrumpMergePolicyType)

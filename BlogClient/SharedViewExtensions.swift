@@ -30,7 +30,6 @@ func createBlogViewController(){
     
     viewController.title = "All Posts"
 }
-
 }
 
 extension ErrorReporting where Self : UIViewController  {
