@@ -1,5 +1,8 @@
 # BlogClient
 
+![animated](https://user-images.githubusercontent.com/6539412/28151810-dea0b682-6751-11e7-8700-a17b41a4492b.gif)
+
+
 Login or Make an account  
 
 <img width="432" alt="Login" src="https://cloud.githubusercontent.com/assets/6539412/19414215/89e5e6fc-92fa-11e6-9938-8fe6f89c7299.png">
