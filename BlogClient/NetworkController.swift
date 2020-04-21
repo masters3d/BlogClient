@@ -144,7 +144,7 @@ class NetworkOperation: Operation, URLSessionDataDelegate {
 extension NetworkOperation {
     
     internal convenience init(urlRequest:URLRequest ,sessionName:String , errorDelegate: ErrorReporting?,
-                              successBlock:@escaping (_ data: Data?, _ reponse: HTTPURLResponse?) -> Void = { _ in }
+                              successBlock:@escaping (_ data: Data?, _ reponse: HTTPURLResponse?) -> Void = { _,_  in }
         ) {
         self.init(urlRequest: urlRequest, keyForData: sessionName)
         self.delegate = errorDelegate

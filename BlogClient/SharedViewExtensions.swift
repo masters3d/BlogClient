@@ -23,7 +23,7 @@ func createBlogViewController(){
     viewController.navigationItem.setRightBarButton(button, animated: true)
 
     
-    navigation.addChildViewController(viewController)
+    navigation.addChild(viewController)
     self.viewControllers?.append(navigation)
     
     navigation.tabBarItem = UITabBarItem.init(title: nil, image: #imageLiteral(resourceName: "News"), tag: 0)

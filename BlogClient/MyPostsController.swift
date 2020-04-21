@@ -36,14 +36,14 @@ class MyPostsController:UITableViewController, ErrorReporting, NSFetchedResultsC
     override func viewDidLoad() {
         super.viewDidLoad()
         self.refreshControl = UIRefreshControl()
-        self.refreshControl?.addTarget(self, action: #selector(self.handleRefresh), for: UIControlEvents.valueChanged)
+        self.refreshControl?.addTarget(self, action: #selector(self.handleRefresh), for: UIControl.Event.valueChanged)
         self.fetchedResultsController.delegate = self
         BlogServerAPI.getAllPostsFromServer(delegate: self)
         self.tableView.allowsMultipleSelectionDuringEditing = false
         self.tableView.rowHeight = 200
     }
     
-    func handleRefresh(){
+    @objc func handleRefresh(){
         BlogServerAPI.getAllPostsFromServer(delegate: self)
     }
     
@@ -79,7 +79,7 @@ class MyPostsController:UITableViewController, ErrorReporting, NSFetchedResultsC
         cell.postTitle.text = object.subject
         cell.postContent.text = object.content?.replacingOccurrences(of: "<br>", with: "\n")
         cell.postOwner.text = "by: \(DataController.shared.getUserNameForUserId(object.ownerid))"
-        cell.lastModified.text = DateFormatter.localizedString(from: (object.last_modified as? Date) ?? Date(), dateStyle: .medium, timeStyle: .medium)
+        cell.lastModified.text = DateFormatter.localizedString(from: (object.last_modified) ?? Date(), dateStyle: .medium, timeStyle: .medium)
         return cell
     }
     
@@ -96,7 +96,7 @@ class MyPostsController:UITableViewController, ErrorReporting, NSFetchedResultsC
         
         let url = URL.init(string: BlogServerAPI.serverAddress + "/\(fetchedResultsController.object(at: indexPath).postid)")!
         
-        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        UIApplication.shared.open(url, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -128,7 +128,7 @@ class MyPostsController:UITableViewController, ErrorReporting, NSFetchedResultsC
         return false
     }
     
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         switch editingStyle {
         case .delete:
             let object = fetchedResultsController.object(at: indexPath)
@@ -146,3 +146,8 @@ class MyPostsController:UITableViewController, ErrorReporting, NSFetchedResultsC
 
 
 
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
+}
