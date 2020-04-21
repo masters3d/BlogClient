@@ -224,7 +224,7 @@ fileprivate enum ConnectionType {
 }
 
 fileprivate extension NetworkOperation {
-    fileprivate convenience init(typeOfConnection: ConnectionType) {
+    convenience init(typeOfConnection: ConnectionType) {
         switch typeOfConnection {
             case .sample:
                 let querryDict:[String:Any] = ["extras": "url_s", "safe_search": 1]

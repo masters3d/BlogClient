@@ -14,15 +14,19 @@ extension UserDefaults {
             let url = URL(string: "/"),
             let cookie = HTTPCookie.cookies(withResponseHeaderFields: fields, for: url).first
             else { return }
-        let archiveCookie = NSKeyedArchiver.archivedData(withRootObject: cookie)
+
+        let archiveCookie = try? NSKeyedArchiver.archivedData(withRootObject: cookie, requiringSecureCoding: false)
         standard.set(archiveCookie, forKey: "cookie") //HTTPCookie
     }
     
     static func getCookie() -> HTTPCookie? {
         guard let data = standard.data(forKey: "cookie"),
-            let unarchived = NSKeyedUnarchiver.unarchiveObject(with: data),
+            let unarchived = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data),
             let cookie = unarchived as? HTTPCookie
-            else { return nil }
+            else {
+                NSLog("Not able to getCookie()")
+                return nil
+        }
         return cookie
     }
     
