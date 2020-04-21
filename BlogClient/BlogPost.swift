@@ -24,8 +24,8 @@ func == (lhs:BlogPostData, rhs:BlogPostData) -> Bool{
 struct BlogPostData {
     let subject: String
     let content: String
-    let created: NSDate?
-    let last_modified: NSDate?
+    let created: Date?
+    let last_modified: Date?
     let ownerid: Int64
     let postid: Int64
 }

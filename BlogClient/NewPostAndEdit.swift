@@ -83,7 +83,7 @@ class NewPostAndEdit:UIViewController, ErrorReporting {
 
             
             BlogServerAPI.updatePostOnServer(postId: object.postid, title: title, content: content, delegate: self) { (data, response) in
-                print(response)
+                print(response ?? "No Response")
                 if let _ = response {
                     DispatchQueue.main.async {
                         _ =  self.navigationController?.popViewController(animated: true)

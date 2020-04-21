@@ -120,7 +120,11 @@ extension BlogServerAPI {
         let requestOperation = NetworkOperation.init(urlRequest: request, sessionName: "allBlogPost", errorDelegate: delegate) { (data, response) in
             guard let data = data,
                 let json = try? JSONSerialization.jsonObject(with: data, options: []),
-                let array = json as? [[String:Any]] else { return }
+                let array = json as? [[String:Any]]
+                    else {
+                        NSLog("There was a error in getAllPostsFromServer")
+                        return
+                    }
             
             var allCoreDataResults = [BlogPost]()
             let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
@@ -137,7 +141,7 @@ extension BlogServerAPI {
                     print(error)
                 }
             
-            let resultsServer = array.flatMap(parseJSONFromServer)
+            let resultsServer = array.compactMap(parseJSONFromServer)
             
             // Detect when blog post are deleted outside of the app.
             if resultsServer.count < allCoreDataResults.count {
@@ -186,9 +190,9 @@ extension BlogServerAPI {
         let owneridInt64 = (input["ownerid"] as? Int) ?? 0
         let ownerid = owneridString.isEmpty ? owneridInt64 : 0
         
-        // These ISO String date needs to converted to NSDATE so we can format them nicely for the user
-        let createdDate = Date.serverISOFormatter.date(from: created) as NSDate?
-        let last_modifiedDate = Date.serverISOFormatter.date(from: last_modified) as NSDate?
+        // These ISO String date needs to converted so we can format them nicely for the user
+        let createdDate = Date.serverISOFormatter.date(from: created)
+        let last_modifiedDate = Date.serverISOFormatter.date(from: last_modified)
 
         return BlogPostData(subject: subject, content: content,created: createdDate, last_modified:last_modifiedDate, ownerid: Int64(ownerid), postid: Int64(postid))
     }

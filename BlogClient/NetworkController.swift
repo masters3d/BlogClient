@@ -144,7 +144,7 @@ class NetworkOperation: Operation, URLSessionDataDelegate {
 extension NetworkOperation {
     
     internal convenience init(urlRequest:URLRequest ,sessionName:String , errorDelegate: ErrorReporting?,
-                              successBlock:@escaping (_ data: Data?, _ reponse: HTTPURLResponse?) -> Void = { _ in }
+                              successBlock:@escaping (_ data: Data?, _ reponse: HTTPURLResponse?) -> Void = { _,_  in }
         ) {
         self.init(urlRequest: urlRequest, keyForData: sessionName)
         self.delegate = errorDelegate
@@ -224,7 +224,7 @@ fileprivate enum ConnectionType {
 }
 
 fileprivate extension NetworkOperation {
-    fileprivate convenience init(typeOfConnection: ConnectionType) {
+    convenience init(typeOfConnection: ConnectionType) {
         switch typeOfConnection {
             case .sample:
                 let querryDict:[String:Any] = ["extras": "url_s", "safe_search": 1]
